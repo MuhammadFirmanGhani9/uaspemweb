@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Berqurban Bersama UNP Peduli</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e8f5e8 50%, #f0f9f0 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(135deg, #333, #22c55e);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        .form-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 20px 40px rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="number"],
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.85rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="number"]:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #22c55e;
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .qurban-cost-info {
+            background: #e6ffed;
+            border: 1px solid #a7f3d0;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            color: #065f46;
+            font-size: 0.95rem;
+            display: none; /* Hidden by default */
+        }
+
+        .qurban-cost-info strong {
+            color: #047857;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.9rem 2rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #22c55e, #16a34a);
+            color: white;
+            box-shadow: 0 5px 15px rgba(34, 197, 94, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #16a34a, #15803d);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(34, 197, 94, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+            transform: translateY(-1px);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: #22c55e;
+            text-decoration: none;
+            font-weight: 500;
+            margin-bottom: 2rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: rgba(34, 197, 94, 0.1);
+            transform: translateX(-3px);
+        }
+
+        .back-link::before {
+            content: '←';
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .alert-success {
+            background-color: #d1fae5;
+            color: #065f46;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border: 1px solid #a7f3d0;
+            display: none;
+        }
+
+        .alert-error {
+            background-color: #fee2e2;
+            color: #991b1b;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border: 1px solid #fca5a5;
+            display: none;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">Kembali ke Beranda</a>
+
+        <div class="header">
+            <h1>Form Pendaftaran Peserta Qurban</h1>
+            <p>Isi formulir di bawah untuk mendaftar program qurban UNP Peduli.</p>
+        </div>
+
+        <div id="successAlert" class="alert-success">
+            Pendaftaran berhasil! Data peserta telah disimpan.
+        </div>
+        <div id="errorAlert" class="alert-error">
+            Terjadi kesalahan saat pendaftaran. Harap coba lagi.
+        </div>
+
+        <div class="form-card">
+            <form id="qurbanForm">
+                <div class="form-group">
+                    <label for="nama">Nama Lengkap</label>
+                    <input type="text" id="nama" name="nama" required>
+                </div>
+                <div class="form-group">
+                    <label for="jabatan">Jabatan</label>
+                    <select id="jabatan" name="jabatan" required>
+                        <option value="">Pilih Jabatan</option>
+                        <option value="Dosen">Dosen</option>
+                        <option value="Karyawan">Karyawan</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="telepon">Nomor Telepon</label>
+                    <input type="text" id="telepon" name="telepon" placeholder="Contoh: 08123456789" required>
+                </div>
+                <div class="form-group">
+                    <label for="alamat">Alamat Lengkap</label>
+                    <textarea id="alamat" name="alamat" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="gaji">Gaji Bulanan (Rp)</label>
+                    <input type="number" id="gaji" name="gaji" placeholder="Contoh: 5000000" min="0" required>
+                    <div id="qurbanCostInfo" class="qurban-cost-info">
+                        <p id="qurbanCostText"></p>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="reset" class="btn btn-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2z"/>
+                            <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466"/>
+                        </svg>
+                        Reset
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+                            <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m7.5-3a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5"/>
+                        </svg>
+                        Daftar Peserta
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Helper function to format currency
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0
+            }).format(amount);
+        }
+
+        // Function to generate a unique participant ID
+        function generateID() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let result = 'QRB-';
+            for (let i = 0; i < 5; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            result += '-';
+            for (let i = 0; i < 5; i++) {
+                result += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return result;
+        }
+
+        // Function to load participants from localStorage
+        function loadParticipantsFromStorage() {
+            try {
+                const storedParticipants = localStorage.getItem('qurbanParticipants');
+                return storedParticipants ? JSON.parse(storedParticipants) : [];
+            } catch (e) {
+                console.error("Error loading participants from localStorage:", e);
+                return [];
+            }
+        }
+
+        // Function to save participants to localStorage
+        function saveParticipantsToStorage(participants) {
+            try {
+                localStorage.setItem('qurbanParticipants', JSON.stringify(participants));
+                console.log('Data saved to localStorage:', participants);
+            } catch (e) {
+                console.error("Error saving participants to localStorage:", e);
+            }
+        }
+
+        // Calculate and display qurban cost based on gaji
+        document.getElementById('gaji').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/[^0-9]/g, ''); // Only allow numbers
+            e.target.value = value; // Update input field with cleaned value
+
+            const gaji = parseFloat(value);
+            
+            if (isNaN(gaji) || gaji <= 0) {
+                document.getElementById('qurbanCostInfo').style.display = 'none';
+                return;
+            }
+
+            const biayaQurban = Math.round(gaji * 0.027); // 2.7%
+            const biayaQurbanTahunan = biayaQurban * 12;
+            
+            document.getElementById('qurbanCostInfo').style.display = 'block';
+            document.getElementById('qurbanCostText').innerHTML = `
+                <strong>Biaya qurban bulanan:</strong> ${formatCurrency(biayaQurban)}<br>
+                <strong>Total biaya qurban tahunan:</strong> ${formatCurrency(biayaQurbanTahunan)}<br>
+                <small>(2,7% dari ${formatCurrency(gaji)} × 12 bulan)</small>
+            `;
+        });
+
+        // Format phone number input (remove non-digits, add '0' if starts with '62')
+        document.getElementById('telepon').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
+            if (value.startsWith('62')) {
+                value = '0' + value.substring(2);
+            }
+            e.target.value = value;
+        });
+
+        // Form submission handler
+        document.getElementById('qurbanForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            const nama = document.getElementById('nama').value;
+            const jabatan = document.getElementById('jabatan').value;
+            const telepon = document.getElementById('telepon').value;
+            const alamat = document.getElementById('alamat').value;
+            const gaji = parseFloat(document.getElementById('gaji').value);
+
+            if (isNaN(gaji) || gaji <= 0) {
+                showErrorAlert('Gaji harus angka positif.');
+                return;
+            }
+
+            const biayaQurban = Math.round(gaji * 0.027);
+            const biayaQurbanTahunan = biayaQurban * 12;
+
+            const newParticipant = {
+                id_peserta: generateID(),
+                nama: nama,
+                jabatan: jabatan,
+                telepon: telepon,
+                alamat: alamat,
+                gaji: gaji,
+                gaji_formatted: formatCurrency(gaji),
+                biaya_qurban: biayaQurban,
+                biaya_qurban_formatted: formatCurrency(biayaQurban),
+                biaya_qurban_tahunan: biayaQurbanTahunan,
+                biaya_qurban_tahunan_formatted: formatCurrency(biayaQurbanTahunan),
+                persentase_qurban: 2.7,
+                tanggal_daftar: new Date().toLocaleString('id-ID', {
+                    day: 'numeric',
+                    month: 'numeric',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                })
+            };
+
+            // Load existing participants, add new one, and save back to localStorage
+            const participants = loadParticipantsFromStorage();
+            participants.push(newParticipant);
+            saveParticipantsToStorage(participants);
+
+            // Show success alert and reset form
+            showSuccessAlert();
+            this.reset();
+            document.getElementById('qurbanCostInfo').style.display = 'none'; // Hide info after reset
+        });
+
+        function showSuccessAlert(message = 'Pendaftaran berhasil! Data peserta telah disimpan.') {
+            const alert = document.getElementById('successAlert');
+            alert.textContent = message;
+            alert.style.display = 'block';
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 5000); // Hide after 5 seconds
+        }
+
+        function showErrorAlert(message = 'Terjadi kesalahan saat pendaftaran. Harap coba lagi.') {
+            const alert = document.getElementById('errorAlert');
+            alert.textContent = message;
+            alert.style.display = 'block';
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 5000); // Hide after 5 seconds
+        }
+
+        // Initialize qurban cost info display on load if salary input has value
+        document.addEventListener('DOMContentLoaded', () => {
+            const gajiInput = document.getElementById('gaji');
+            if (gajiInput.value) {
+                const event = new Event('input');
+                gajiInput.dispatchEvent(event);
+            }
+        });
+
+    </script>
+</body>
+</html>
